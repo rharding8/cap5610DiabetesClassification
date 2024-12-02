@@ -2,12 +2,15 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.model_selection import GridSearchCV
 
 class MLP:
-    def __init__(self, X_train, y_train, params=None):
-        if params != None:
+    def __init__(self, X_train, y_train, params=None, search=False):
+        if search == True:
+            self.find_set_best_params(X_train, y_train)
+        elif params != None:
             self.classifier = MLPClassifier(**params)
             self.fit_classifier(X_train, y_train)
-        
-        self.find_set_best_params(X_train, y_train)
+        else:
+            self.classifier = MLPClassifier()
+            self.fit_classifier(X_train,y_train)
 
     def find_set_best_params(self, X_train, y_train):
         cols = X_train.shape[1]
