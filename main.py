@@ -18,6 +18,16 @@ def evaluation(y_pred, y_true):
 
 def mlp(X_train, y_train):
     X_train_s, y_train_s = X_train, y_train
+    cols = X_train.shape[1]
+
+    params = {'solver': 'adam',
+              'activation': 'tanh',
+              'alpha': 1e-4,
+              'hidden_layer_sizes': ((cols + 3)/2,),
+              'learning_rate_init': 0.001,
+              'max_iter': 1000,
+              'random_state': 42}
+
     print("\n Do you want to use oversampling?")
     print("1. Yes (Recommended).")
     print("2. No (Not Recommended).")
@@ -45,15 +55,16 @@ def mlp(X_train, y_train):
     while True:
         selection = input("Enter your choice of hyperparameter tuning: ")
         if selection == "1":
-            print("IMPLEMENT LATER")
-            return None
+            print("You've chosen to use predetermined parameters...")
+            mlp_classifier = MLP(X_train_s, y_train_s, params=params)
+            return mlp_classifier
         elif selection == "2":
             print("You've chosen to do a Grid Search...")
             mlp_classifier = MLP(X_train_s, y_train_s, search=True)
             return mlp_classifier
         elif selection == "3":
             print("You've chosen to use Default Parameters...")
-            mlp_classifier = MLP(X_train_s, y_train_s, search=True)
+            mlp_classifier = MLP(X_train_s, y_train_s)
             return mlp_classifier
         elif selection == "0":
             print("Exiting MLP...")
