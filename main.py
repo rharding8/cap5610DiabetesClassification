@@ -118,7 +118,7 @@ def main():
             print("IMPLEMENT LATER")
             break
         elif choice == "5":
-            transformer_model.evaluate_model()
+            transformer_model.main()            
             break
         elif choice == "0":
             print("Exiting...")
