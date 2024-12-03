@@ -59,7 +59,7 @@ X_train, X_val, y_train, y_val = train_test_split(
 smote = SMOTE(random_state=42)
 X_train_smote, y_train_smote = smote.fit_resample(X_train, y_train)
 
-# Define your dataset class
+# Define dataset class
 class DiabetesDataset(Dataset):
     def __init__(self, features_df, target_df, tokenizer, target_col):
         self.features_df = features_df
