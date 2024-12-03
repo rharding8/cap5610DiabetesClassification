@@ -5,6 +5,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix, ConfusionMatrixDisplay
 import matplotlib.pyplot as plt
+import transformer_model  # Import the transformer model
 
 def evaluation(y_pred, y_true):
     print("Displaying Confusion Matrix...")
@@ -72,7 +73,6 @@ def mlp(X_train, y_train):
         else:
             print("Invalid Input, try again!")
 
-
 def main():
     df = pd.read_csv('./diabetes_012_health_indicators_BRFSS2015.csv')
 
@@ -118,14 +118,13 @@ def main():
             print("IMPLEMENT LATER")
             break
         elif choice == "5":
-            print("IMPLEMENT LATER")
+            transformer_model.main()            
             break
         elif choice == "0":
             print("Exiting...")
             return
         else:
             print("Invalid Input, try again!")
-
 
 if __name__ == "__main__":
     main()
