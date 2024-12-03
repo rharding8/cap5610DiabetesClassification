@@ -28,7 +28,7 @@ class FocalLoss(nn.Module):
             F_loss = (1 - pt) ** self.gamma * BCE_loss
         if self.reduction == 'mean':
             return F_loss.mean()
-        elif self.reduction == 'sum':
+        elif self.reduction is 'sum':
             return F_loss.sum()
         else:
             return F_loss
@@ -39,8 +39,8 @@ alpha = torch.tensor([1, 5, 3], dtype=torch.float32)  # giving higher weight to 
 focal_loss = FocalLoss(gamma=2.0, alpha=alpha)
 
 # Load tokenizer and model
-tokenizer = DistilBertTokenizerFast.from_pretrained('./saved_model-v4')
-model = DistilBertForSequenceClassification.from_pretrained('./saved_model-v4', num_labels=3)
+tokenizer = DistilBertTokenizerFast.from_pretrained('distilbert-base-uncased')
+model = DistilBertForSequenceClassification.from_pretrained('distilbert-base-uncased', num_labels=3)
 
 # Load and prepare dataset
 data_path = './data/diabetes-dataset/diabetes_012_health_indicators_BRFSS2015.csv'
@@ -59,6 +59,7 @@ X_train, X_val, y_train, y_val = train_test_split(
 smote = SMOTE(random_state=42)
 X_train_smote, y_train_smote = smote.fit_resample(X_train, y_train)
 
+# Define your dataset class
 class DiabetesDataset(Dataset):
     def __init__(self, features_df, target_df, tokenizer, target_col):
         self.features_df = features_df
