@@ -94,7 +94,8 @@ def main():
         choice = input("Enter your choice of classifier: ")
 
         if choice == "1":
-            print("IMPLEMENT LATER")
+            with open('petals-lora.py') as file:
+                exec(file.read())
             break
         elif choice == "2":
             print("\nAvailable CNN models: ")
