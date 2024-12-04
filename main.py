@@ -1,11 +1,14 @@
 from imblearn.over_sampling import SMOTE
 import MLP
+from cnn import CNNCode
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix, ConfusionMatrixDisplay
 import matplotlib.pyplot as plt
 import transformer_model  # Import the transformer model
+
+
 
 def evaluation(y_pred, y_true):
     print("Displaying Confusion Matrix...")
@@ -94,7 +97,21 @@ def main():
             print("IMPLEMENT LATER")
             break
         elif choice == "2":
-            print("IMPLEMENT LATER")
+            print("\nAvailable CNN models: ")
+            print("1. Complex model")
+            print("2. Basic Model")
+            print("0. Exit")
+
+            while True:
+                choice = input("Enter your choice of model: ")
+                if choice == "1":
+                    CNNCode(1)
+                if choice == "2":
+                    CNNCode(2)
+                elif choice == "0":
+                    print("Exiting...")
+                    return
+                return
             break
         elif choice == "3":
             mlp_classifier = mlp(X_train, y_train)
