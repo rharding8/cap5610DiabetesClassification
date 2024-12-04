@@ -105,9 +105,9 @@ def main():
             while True:
                 choice = input("Enter your choice of model: ")
                 if choice == "1":
-                    CNNCode(1)
+                    CNNCode(1,X_train,y_train,X_test,y_test,X_val,y_val)
                 if choice == "2":
-                    CNNCode(2)
+                    CNNCode(2,X_train,y_train,X_test,y_test,X_val,y_val)
                 elif choice == "0":
                     print("Exiting...")
                     return

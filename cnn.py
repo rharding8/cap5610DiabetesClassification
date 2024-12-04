@@ -225,16 +225,10 @@ def train_and_save_model(model_type, hyperparams, train_loader, val_loader, test
     return model, history, metrics
 
 # CNNCode
-def CNNCode(model):
-    df = pd.read_csv('./diabetes_012_health_indicators_BRFSS2015.csv')
-
-    X_train, X_test, y_train, y_test = train_test_split(
-        df.iloc[:, 1:], df['Diabetes_012'], test_size=0.2, random_state=42
-    )
-
-    X_train, X_val, y_train, y_val = train_test_split(
-        X_train, y_train, test_size=0.2, random_state=42
-    )
+def CNNCode(model, X_train, y_train, X_test, y_test, X_val, y_val):
+    y_train = y_train.astype(float).astype(int)
+    y_val = y_val.astype(float).astype(int)
+    y_test = y_test.astype(float).astype(int)
 
     scaler = MinMaxScaler()
     X_train = scaler.fit_transform(X_train)
@@ -244,17 +238,22 @@ def CNNCode(model):
     smote = SMOTE(random_state=42)
     X_train, y_train = smote.fit_resample(X_train, y_train)
 
+    y_train = np.array(y_train)
+
+    # Preprocess features for CNN
     def preprocess_features(features):
         X_padded = np.zeros((features.shape[0], 24))
-        X_padded[:, :21] = features
+        X_padded[:, :features.shape[1]] = features
         return X_padded.reshape(-1, 1, 4, 6)
 
     X_train_tensor = torch.tensor(preprocess_features(X_train), dtype=torch.float32)
-    y_train_tensor = torch.tensor(y_train.values, dtype=torch.long)
+    y_train_tensor = torch.tensor(y_train, dtype=torch.long)
+
     X_val_tensor = torch.tensor(preprocess_features(X_val), dtype=torch.float32)
-    y_val_tensor = torch.tensor(y_val.values, dtype=torch.long)
+    y_val_tensor = torch.tensor(y_val.to_numpy(), dtype=torch.long)
+
     X_test_tensor = torch.tensor(preprocess_features(X_test), dtype=torch.float32)
-    y_test_tensor = torch.tensor(y_test.values, dtype=torch.long)
+    y_test_tensor = torch.tensor(y_test.to_numpy(), dtype=torch.long)
 
     train_dataset = DiabetesDataset(X_train_tensor, y_train_tensor)
     val_dataset = DiabetesDataset(X_val_tensor, y_val_tensor)
