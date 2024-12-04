@@ -34,7 +34,7 @@ class FocalLoss(nn.Module):
             return F_loss
 
 # Function to run the entire training and evaluation process
-def run_training_pipeline(data_path='./diabetes_012_health_indicators_BRFSS2015.csv'):
+def run_training_pipeline(X_train,y_train,X_test,y_test,X_val,y_val):
     # Adjust the alpha parameter to give higher weights to underrepresented classes
     # [No Diabetes, Pre-Diabetic, Diabetic]
     alpha = torch.tensor([1, 5, 3], dtype=torch.float32)  # giving higher weight to "Pre-Diabetic" and "Diabetic"
@@ -43,18 +43,6 @@ def run_training_pipeline(data_path='./diabetes_012_health_indicators_BRFSS2015.
     # Load tokenizer and model
     tokenizer = DistilBertTokenizerFast.from_pretrained('distilbert-base-uncased')
     model = DistilBertForSequenceClassification.from_pretrained('distilbert-base-uncased', num_labels=3)
-
-    # Load and prepare dataset
-    df = pd.read_csv(data_path)
-
-    # Partition data
-    X_train, X_test, y_train, y_test = train_test_split(
-        df.iloc[:, 1:], df[['Diabetes_012']], test_size=0.2, random_state=42
-    )
-
-    X_train, X_val, y_train, y_val = train_test_split(
-        X_train, y_train, test_size=0.2, random_state=42
-    )
 
     # Apply SMOTE to the training data
     smote = SMOTE(random_state=42)
@@ -139,8 +127,8 @@ def evaluate_model(trainer, test_dataset):
     print(report)
     print(matrix)
 
-def main():
-    trainer, model, tokenizer, test_dataset = run_training_pipeline()
+def main(X_train,y_train,X_test,y_test,X_val,y_val):
+    trainer, model, tokenizer, test_dataset = run_training_pipeline(X_train,y_train,X_test,y_test,X_val,y_val)
     train_and_save(trainer, model, tokenizer)
     evaluate_model(trainer, test_dataset)
 

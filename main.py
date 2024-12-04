@@ -135,7 +135,7 @@ def main():
             print("IMPLEMENT LATER")
             break
         elif choice == "5":
-            transformer_model.main()            
+            transformer_model.main(X_train,y_train,X_test,y_test,X_val,y_val)            
             break
         elif choice == "0":
             print("Exiting...")
