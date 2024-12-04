@@ -7,6 +7,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix, ConfusionMatrixDisplay
 import matplotlib.pyplot as plt
 import transformer_model  # Import the transformer model
+import LSTM_model
 
 
 
@@ -133,7 +134,7 @@ def main():
 
             return
         elif choice == "4":
-            print("IMPLEMENT LATER")
+            LSTM_model.main()
             break
         elif choice == "5":
             transformer_model.main(X_train,y_train,X_test,y_test,X_val,y_val)            
