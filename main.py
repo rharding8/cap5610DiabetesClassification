@@ -1,5 +1,5 @@
 from imblearn.over_sampling import SMOTE
-import MLP
+import MLPModule
 from cnn import CNNCode
 import pandas as pd
 import numpy as np
@@ -27,7 +27,7 @@ def mlp(X_train, y_train):
     params = {'solver': 'adam',
               'activation': 'tanh',
               'alpha': 1e-4,
-              'hidden_layer_sizes': ((cols + 3)/2,),
+              'hidden_layer_sizes': (int((cols + 3)/2),),
               'learning_rate_init': 0.001,
               'max_iter': 1000,
               'random_state': 42}
@@ -60,15 +60,15 @@ def mlp(X_train, y_train):
         selection = input("Enter your choice of hyperparameter tuning: ")
         if selection == "1":
             print("You've chosen to use predetermined parameters...")
-            mlp_classifier = MLP(X_train_s, y_train_s, params=params)
+            mlp_classifier = MLPModule.MLP(X_train_s, y_train_s, params=params)
             return mlp_classifier
         elif selection == "2":
             print("You've chosen to do a Grid Search...")
-            mlp_classifier = MLP(X_train_s, y_train_s, search=True)
+            mlp_classifier = MLPModule.MLP(X_train_s, y_train_s, search=True)
             return mlp_classifier
         elif selection == "3":
             print("You've chosen to use Default Parameters...")
-            mlp_classifier = MLP(X_train_s, y_train_s)
+            mlp_classifier = MLPModule.MLP(X_train_s, y_train_s)
             return mlp_classifier
         elif selection == "0":
             print("Exiting MLP...")
