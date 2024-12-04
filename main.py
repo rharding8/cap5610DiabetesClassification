@@ -1,5 +1,6 @@
 from imblearn.over_sampling import SMOTE
 import MLP
+import MyLSTM
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -104,7 +105,7 @@ def main():
 
             return
         elif choice == "4":
-            print("IMPLEMENT LATER")
+            MyLSTM.main()
             break
         elif choice == "5":
             print("IMPLEMENT LATER")
